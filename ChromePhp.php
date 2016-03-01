@@ -1,4 +1,7 @@
 <?php
+
+namespace ChromePHP;
+
 /**
  * Copyright 2010-2013 Craig Campbell
  *
@@ -307,7 +310,7 @@ class ChromePhp
             $object_as_array[$key] = $this->_convert($value);
         }
 
-        $reflection = new ReflectionClass($object);
+        $reflection = new \ReflectionClass($object);
 
         // loop through the properties and add those
         foreach ($reflection->getProperties() as $property) {
@@ -324,7 +327,7 @@ class ChromePhp
 
             try {
                 $value = $property->getValue($object);
-            } catch (ReflectionException $e) {
+            } catch (\ReflectionException $e) {
                 $value = 'only PHP 5.3 can access private/protected properties';
             }
 
@@ -344,7 +347,7 @@ class ChromePhp
      * @param ReflectionProperty
      * @return string
      */
-    protected function _getPropertyKey(ReflectionProperty $property)
+    protected function _getPropertyKey(\ReflectionProperty $property)
     {
         $static = $property->isStatic() ? ' static' : '';
         if ($property->isPublic()) {
@@ -391,6 +394,33 @@ class ChromePhp
 
     protected function _writeHeader($data)
     {
+        $sep = '_________________________________________________________________________________________________'."\r\n";
+        //Test
+        $DEBUG_CHANNEL = fopen(__DIR__.'/debug.stream', 'a+');
+        if (!empty($data['request_uri'])) {
+            $header = $sep.$sep;
+            $header .= 'From '.$data['request_uri']."\r\n".$sep;
+            fwrite($DEBUG_CHANNEL, $header, strlen($header));
+        }
+        if (!empty($data['rows'])) {
+            foreach ($data['rows'] as $row) {
+                $rowPrint = '';
+                if (!empty($row[0])) {
+                    foreach ($row[0] as $log) {
+                        if (is_array($log) || is_object($log)) {
+                            $rowPrint .= print_r($log, true);
+                        } else {
+                            $rowPrint .= $log;
+                        }
+                    }
+                }
+                $formatedRow = 'In '.$row[1].' on '.date('H:i:s d-m-Y')."\r\n".$sep;
+                $formatedRow .= $rowPrint."\r\n\r\n";
+                fwrite($DEBUG_CHANNEL, $formatedRow, strlen($formatedRow));
+            }
+        }
+        //fwrite($DEBUG_CHANNEL, print_r($data, true), strlen(print_r($data, true)));
+        fclose($DEBUG_CHANNEL);
         header(self::HEADER_NAME . ': ' . $this->_encode($data));
     }
 
