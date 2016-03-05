@@ -2,3 +2,6 @@
 !*.php
 README.md
 !*.json
+!*.js
+!*.html
+!/**
