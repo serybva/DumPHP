@@ -1,1 +1,4 @@
-debug.stream
+*
+!*.php
+README.md
+!*.json
