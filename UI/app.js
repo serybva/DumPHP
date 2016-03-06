@@ -27,12 +27,13 @@ app.on('ready', function() {
   // Create the browser window.
   //mainWindow = new BrowserWindow({width: 800, height: 600});
   mainWindow = new BrowserWindow();
-  mainWindow.minimize();
+  //mainWindow.minimize();
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/view/index.html');
+
   var   dataReceiver = new Receiver();
-  var   dataParser = new Parser();
-  dataReceiver.on(dataReceiver.DATA_BLOCK_FOUND, dataParser._parse);
+  var   dataParser = new Parser(mainWindow);
+  dataReceiver.on(dataReceiver.DATA_BLOCK_FOUND, dataParser._parse.bind(dataParser));
   new Server(dataReceiver);
 
   // Emitted when the window is closed.

@@ -1,0 +1,45 @@
+@import (css) "reset.css";
+@import (css) "fonts.css";
+@import (once) "icons.less";
+@import (once) "utils.less";
+
+body {
+    background-color: #323332;
+    font-size: 18px;
+    font-family: 'Inconsolata';
+    color: #efefef;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 1.2em;
+}
+h2 {
+    font-size: 1.1em;
+}
+
+ul {
+    list-style: none;
+}
+
+header {
+    display: flex;
+    height: 75px;
+    article {
+        height: 100%;
+        font-size: 0.8em;
+        margin-right: 15px;
+        ul.attr-list {
+            margin-right: 10px;
+        }
+        &.cpu {
+            li {
+                margin-bottom: 2px;
+                height: 15px;
+                &.model {
+                    width: 70px;
+                }
+            }
+        }
+    }
+}

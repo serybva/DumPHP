@@ -1,7 +1,3 @@
-*
-!*.php
-README.md
-!*.json
-!*.js
-!*.html
-!/**
+Icons.txt
+console.php
+test.log

@@ -1,0 +1,71 @@
+@import "reset.css";
+@import "fonts.css";
+.icon {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+i.icon {
+  display: inline-block;
+}
+.icon.header {
+  height: 100%;
+  width: 50px;
+  background-position: center top;
+}
+.icon.bullet {
+  height: 100%;
+  width: 15px;
+  background-position: center bottom;
+  margin-right: 5px;
+}
+.icon.chip {
+  background-image: url("../Icons/microchip.svg");
+}
+.icon.ram-chip {
+  background-image: url("../Icons/ram-chip.svg");
+}
+.icon.rotate-90 {
+  transform: rotate(90deg);
+}
+.float.left {
+  float: left;
+}
+.float.right {
+  float: right;
+}
+body {
+  background-color: #323332;
+  font-size: 18px;
+  font-family: 'Inconsolata';
+  color: #efefef;
+  padding: 10px;
+}
+h1 {
+  font-size: 1.2em;
+}
+h2 {
+  font-size: 1.1em;
+}
+ul {
+  list-style: none;
+}
+header {
+  display: flex;
+  height: 75px;
+}
+header article {
+  height: 100%;
+  font-size: 0.8em;
+  margin-right: 15px;
+}
+header article ul.attr-list {
+  margin-right: 10px;
+}
+header article.cpu li {
+  margin-bottom: 2px;
+  height: 15px;
+}
+header article.cpu li.model {
+  width: 70px;
+}

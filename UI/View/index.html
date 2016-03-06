@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Hello World!</title>
+        <link rel="stylesheet" href="Styles/main.css" />
+    </head>
+    <body>
+        <header data-partial="Partials/header.mustache" data-hide="true">
+        </header>
+        <h1>Hello World!</h1>
+        We are using node <script>document.write(process.versions.node)</script>,
+        Chrome <script>document.write(process.versions.chrome)</script>,
+        and Electron <script>document.write(process.versions.electron)</script>.
+        <script>
+            window.$ = window.jQuery = require('./Vendor/jquery-2.2.1.min.js');
+            window.Emitter = require('./Vendor/Emitter.js');
+            window.Mustache = require('./Vendor/mustache.min.js');
+            window.Partials = require('./Lib/Partials.js');
+            window.Engine = require('./Engine.js');
+            new Engine();
+            $(document).on('ready', function() {
+                new Partials().renderAll();
+            });
+        </script>
+    </body>
+</html>

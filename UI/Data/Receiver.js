@@ -27,6 +27,7 @@ class   Receiver extends Emitter {
     }
 
     dataReady(data) {
+        console.log('Incoming data from : '+(this.socket || {}).remoteAddress+':'+(this.socket || {}).localPort);
         if (typeof this.buffer === 'undefined') {
             this.buffer = data;
         } else {

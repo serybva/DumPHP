@@ -1,5 +1,8 @@
 {
   "name"    : "DumPHP-UI",
   "version" : "0.0.1",
-  "main"    : "app.js"
+  "main"    : "app.js",
+  "dependencies" : {
+      "pretty-bytes" : "^3.0.0"
+  }
 }
