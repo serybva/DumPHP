@@ -16,7 +16,7 @@ class   Parser {
     _parse(data) {
         var json = JSON.parse(data.toString('UTF-8'));
         var util = require('util');
-        console.log(data.toString('UTF-8'));
+        console.log(getTime()+data.toString('UTF-8'));
         console.log(util.inspect(json, false, null));
         this.view.webContents.send('dump-available', json);
         //console.log(data.toJSON());

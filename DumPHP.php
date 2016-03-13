@@ -67,7 +67,7 @@ class       DumPHP {
     protected $_socket;
 
     private function        __construct() {
-        $this->_socket = fsockopen('localhost', 4242);
+        $this->_socket = @fsockopen('localhost', 4242);
         if (!$this->_socket) {
             throw new Exception('Unable to join dump sever at localhost:4242');
         }
@@ -202,6 +202,7 @@ class       DumPHP {
             if (isset($backtrace[0]['line'])) {
                 $dump['call_line'] = $backtrace[0]['line'];
             }
+            $dump['timestamp'] = time();
             $dump['data'] = $dumper->_format($arg);
             $logs[] = $dump;
         }
@@ -222,16 +223,16 @@ class       DumPHP {
                 //$properties['data'] = $this->_formatObject($var);
             break;
             case 'boolean' :
-                $properties['data'] = $this->_formatBool($var);
+                $properties = array_merge($this->_formatBool($var), $properties);
             break;
             case 'string' :
-                $properties['data'] = $this->_formatString($var);
+                $properties = array_merge($this->_formatString($var), $properties);
             break;
             case 'NULL' :
-                $properties['data'] = $this->_formatNull($var);
+                $properties = array_merge($this->_formatNull($var), $properties);
             break;
             case 'integer' :
-                $properties['data'] = $this->_formatInt($var);
+                $properties = array_merge($this->_formatInt($var), $properties);
             break;
         }
         return $properties;
@@ -246,8 +247,10 @@ class       DumPHP {
 
     protected   function    _formatString($string) {
         $data['value'] = $string;
+        $data['html'] = htmlentities($string);
         $data['hex_value'] = bin2hex($string);
         $data['length'] = mb_strlen($string);
+        $data['size'] = strlen($string);
         $data['encoding'] = mb_detect_encoding($string);
         return $data;
     }
@@ -302,7 +305,7 @@ class       DumPHP {
 
     protected   function        _sendDump($logs) {
         $JSON = json_encode($logs);
-        $bufferSize = 1024*500;
+        $bufferSize = 1024*1024*5;
         if ($this->_socket) {
             $wrote = fwrite($this->_socket, $JSON, $bufferSize);
             while ($wrote === $bufferSize) {

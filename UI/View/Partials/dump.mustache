@@ -1,0 +1,53 @@
+<article class="dump">
+    <button class="dump-head" role="button" data-toggle="collapse">
+        {{call_file}}:{{call_line}} on <span class="italic">{{date}}</span>
+    </button>
+    <div class="collapse dump-content {{data.type}}">
+        <p class="value">
+            <span class="label type">({{data.type}})</span>
+            {{#data.html}}
+                <div class="tabbed-content">
+                    <ul class="tab-nav">
+                        <li data-target="div.raw">Raw</li>
+                        <li data-target="div.html">HTML</li>
+                        {{#data.JSON}}
+                            <li data-target="div.json">JSON</li>
+                        {{/data.JSON}}
+                    </ul>
+                    <div class="raw tab-content">
+                        {{{data.value}}}
+                    </div>
+                    <div class="html tab-content">
+                        {{{data.html}}}
+                    </div>
+                    {{#data.JSON}}
+                        <div class="json tab-content">
+                            {{{data.JSON}}}
+                        </div>
+                    {{/data.JSON}}
+                </div>
+            {{/data.html}}
+            {{^data.html}}
+                <span class="bold">{{data.value}}</span>
+            {{/data.html}}
+            {{#data.length}}
+                ({{#data.encoding}}{{data.encoding}}{{/data.encoding}}, length {{data.length}} / {{#sizeFormat}}{{data.size}}{{/sizeFormat}})
+            {{/data.length}}
+        </p>
+        {{#data.hex_value}}
+            <p class="value">
+                <span class="label">Hexadecimal value : </span>0x{{data.hex_value}}
+            </p>
+        {{/data.hex_value}}
+        {{#data.bin_value}}
+            <p class="value">
+                <span class="label">Binary value : </span>{{data.bin_value}}
+            </p>
+        {{/data.bin_value}}
+        {{#data.dec_value}}
+            <p class="value">
+                <span class="label">Decimal value : </span>{{data.dec_value}}
+            </p>
+        {{/data.dec_value}}
+    </div>
+</article>

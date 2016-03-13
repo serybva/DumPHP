@@ -1,11 +1,9 @@
-<article class="cpu">
-    <ul class="attr-list float left">
-        <li class="cores_count">{{cpu_cores}}</li>
-        <li class="freq">{{cpu_freq}}</li>
-        <li class="mem">
-            <i class="icon ram-chip bullet rotate-90"></i>
-            <span>{{mem_used}}/{{mem_total}}</span>
-        </li>
-    </ul>
-    <div class="icon chip float right header"></div>
+<article class="cpu hidden">
+    {{>sysInfo}}
+</article>
+<article class="tools">
+    <button class="icon expand-all header" title="Expand all"></button>
+</article>
+<article class="infos">
+    <p class="one-line"><span class="big-number">{{dumps_count}}</span><span class="label"> dumps displayed</span></p>
 </article>

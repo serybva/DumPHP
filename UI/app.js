@@ -21,6 +21,11 @@ app.on('window-all-closed', function() {
   }
 });
 
+global.getTime = function() {
+    var date = new Date();
+    return date.toLocaleTimeString()+':'+date.getMilliseconds()+' : ';
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {

@@ -9,11 +9,13 @@ body {
     font-family: 'Inconsolata';
     color: #efefef;
     padding: 10px;
+    padding-top: 0px;
 }
 
 h1 {
     font-size: 1.2em;
 }
+
 h2 {
     font-size: 1.1em;
 }
@@ -22,9 +24,21 @@ ul {
     list-style: none;
 }
 
+button {
+    cursor: pointer;
+    &:focus,
+    &:active {
+        border: none;
+    }
+}
+
 header {
     display: flex;
-    height: 75px;
+    height: 65px;
+    background-color: #323332;
+    padding-top: 10px;
+    width: 100%;
+    position: fixed;
     article {
         height: 100%;
         font-size: 0.8em;
@@ -41,5 +55,20 @@ header {
                 }
             }
         }
+        p.one-line {
+            height: 100%;
+            span.big-number + span.label {
+                transform: translateY(-100%);
+                margin-left: 10px;
+                display: inline-block;
+            }
+        }
     }
 }
+
+span.big-number {
+    font-size: 4em;
+    color: #F05454;
+}
+
+@import (once) "dump.less";

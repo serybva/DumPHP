@@ -1,4 +1,6 @@
 .icon {
+    background: none;//Reset
+    border: none;//For buttons, links etc
     background-size: contain;
     background-repeat: no-repeat;
     background-position:center center;
@@ -24,5 +26,8 @@
     }
     &.rotate-90{
         transform: rotate(90deg);
+    }
+    &.expand-all {
+        background-image: url("../Icons/expand-all.svg");
     }
 }

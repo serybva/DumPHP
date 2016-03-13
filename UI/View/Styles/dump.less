@@ -1,0 +1,86 @@
+.dumps-wrapper {
+    padding-top: 85px;
+}
+
+article.dump {
+    margin-bottom: 10px;
+    border: solid 2px #F05454;
+    background-color: #EFEFEF;
+    color: #323332;
+    button.dump-head {
+        background: none;
+        border: none;
+        font-weight: bold;
+        font-size: 0.8em;
+        letter-spacing: 1px;
+        color: #323332;
+        width: 100%;
+        padding: 5px;
+        text-align: left;
+        background-color: #F05454;
+        &:active,
+        &:focus {
+            border: none;
+            outline: none;
+        }
+        a {
+            color: #323332;
+            text-decoration: none;
+            width: 100%;
+            display: inline-block;
+        }
+    }
+    div.dump-content {
+        padding: 10px;
+        margin-top: 5px;
+        font-size: 1em;
+        span.label {
+            &.type {
+                font-style: italic;
+                font-size: 0.9em;
+            }
+        }
+        p {
+            margin-top: 5px;
+            word-wrap: break-word;
+        }
+    }
+}
+//Inspired by http://red-team-design.com/google-play-minimal-tabs-with-css3-jquery/
+.tabbed-content {
+    margin-top: 5px;
+    margin-left: 0px;
+    margin-bottom: 15px;
+    ul {
+        li[data-target] {
+            float: left;
+            opacity: 0.8;
+            margin-left: -15px;
+            cursor: pointer;
+            width: 50px;
+            height: 0px;
+            &:first-child {
+                margin-left: 0px;
+            }
+            padding-left: 1%;
+            border-left: 30px solid transparent;
+            border-bottom: 30px solid #323332;
+            border-bottom-color: #777\9;
+            line-height: 30px;
+            color: #f05454;
+            &.on {
+                opacity: 1;
+            }
+        }
+        height: 30px;
+    }
+    .tab-content {
+        margin: 0!important;
+        padding: 10px;
+        border: solid 1px #f05454;
+        word-wrap: break-word;
+        & * {
+            all: unset;
+        }
+    }
+}

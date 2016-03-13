@@ -1,6 +1,8 @@
 @import "reset.css";
 @import "fonts.css";
 .icon {
+  background: none;
+  border: none;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -28,11 +30,23 @@ i.icon {
 .icon.rotate-90 {
   transform: rotate(90deg);
 }
+.icon.expand-all {
+  background-image: url("../Icons/expand-all.svg");
+}
 .float.left {
   float: left;
 }
 .float.right {
   float: right;
+}
+.hidden {
+  display: none;
+}
+.bold {
+  font-weight: bold;
+}
+.italic {
+  font-style: italic;
 }
 body {
   background-color: #323332;
@@ -40,6 +54,7 @@ body {
   font-family: 'Inconsolata';
   color: #efefef;
   padding: 10px;
+  padding-top: 0px;
 }
 h1 {
   font-size: 1.2em;
@@ -50,9 +65,20 @@ h2 {
 ul {
   list-style: none;
 }
+button {
+  cursor: pointer;
+}
+button:focus,
+button:active {
+  border: none;
+}
 header {
   display: flex;
-  height: 75px;
+  height: 65px;
+  background-color: #323332;
+  padding-top: 10px;
+  width: 100%;
+  position: fixed;
 }
 header article {
   height: 100%;
@@ -68,4 +94,98 @@ header article.cpu li {
 }
 header article.cpu li.model {
   width: 70px;
+}
+header article p.one-line {
+  height: 100%;
+}
+header article p.one-line span.big-number + span.label {
+  transform: translateY(-100%);
+  margin-left: 10px;
+  display: inline-block;
+}
+span.big-number {
+  font-size: 4em;
+  color: #F05454;
+}
+.dumps-wrapper {
+  padding-top: 85px;
+}
+article.dump {
+  margin-bottom: 10px;
+  border: solid 2px #F05454;
+  background-color: #EFEFEF;
+  color: #323332;
+}
+article.dump button.dump-head {
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 0.8em;
+  letter-spacing: 1px;
+  color: #323332;
+  width: 100%;
+  padding: 5px;
+  text-align: left;
+  background-color: #F05454;
+}
+article.dump button.dump-head:active,
+article.dump button.dump-head:focus {
+  border: none;
+  outline: none;
+}
+article.dump button.dump-head a {
+  color: #323332;
+  text-decoration: none;
+  width: 100%;
+  display: inline-block;
+}
+article.dump div.dump-content {
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 1em;
+}
+article.dump div.dump-content span.label.type {
+  font-style: italic;
+  font-size: 0.9em;
+}
+article.dump div.dump-content p {
+  margin-top: 5px;
+  word-wrap: break-word;
+}
+.tabbed-content {
+  margin-top: 5px;
+  margin-left: 0px;
+  margin-bottom: 15px;
+}
+.tabbed-content ul {
+  height: 30px;
+}
+.tabbed-content ul li[data-target] {
+  float: left;
+  opacity: 0.8;
+  margin-left: -15px;
+  cursor: pointer;
+  width: 50px;
+  height: 0px;
+  padding-left: 1%;
+  border-left: 30px solid transparent;
+  border-bottom: 30px solid #323332;
+  border-bottom-color: #777\9;
+  line-height: 30px;
+  color: #f05454;
+}
+.tabbed-content ul li[data-target]:first-child {
+  margin-left: 0px;
+}
+.tabbed-content ul li[data-target].on {
+  opacity: 1;
+}
+.tabbed-content .tab-content {
+  margin: 0!important;
+  padding: 10px;
+  border: solid 1px #f05454;
+  word-wrap: break-word;
+}
+.tabbed-content .tab-content * {
+  all: unset;
 }

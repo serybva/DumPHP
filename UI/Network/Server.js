@@ -21,7 +21,7 @@ class Server {
     _newConnection(socket) {
         this.handler.socket = socket;
         socket.on('data', this.callbacks.dataAvailable.bind(this.handler));
-        console.log('Incoming connection from : '+socket.remoteAddress+':'+socket.localPort);
+        console.log(getTime()+'Incoming connection from : '+socket.remoteAddress+':'+socket.localPort);
     }
 
     _listen() {
