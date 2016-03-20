@@ -38,7 +38,7 @@ app.on('ready', function() {
 
   var   dataReceiver = new Receiver();
   var   dataParser = new Parser(mainWindow);
-  dataReceiver.on(dataReceiver.DATA_BLOCK_FOUND, dataParser._parse.bind(dataParser));
+  dataReceiver.on(dataReceiver.DATA_BLOCK_FOUND, dataParser.parse.bind(dataParser));
   new Server(dataReceiver);
 
   // Emitted when the window is closed.
