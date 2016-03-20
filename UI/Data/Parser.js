@@ -14,13 +14,22 @@ class   Parser {
     }
 
     _parse(data) {
-        var json = JSON.parse(data.toString('UTF-8'));
-        var util = require('util');
-        console.log(getTime()+data.toString('UTF-8'));
-        console.log(util.inspect(json, false, null));
-        this.view.webContents.send('dump-available', json);
-        //console.log(data.toJSON());
-        //console.log(data);
+        console.log(getTime()+'Parser received data');
+        //console.log(data.toString('UTF-8'));
+        try {
+            var json = JSON.parse(data.toString('UTF-8'));
+            //console.log(getTime()+'Parsed json');
+            var util = require('util');
+            //console.log(getTime()+data.toString('UTF-8'));
+            //console.log(util.inspect(json, false, null));
+            this.view.webContents.send('dump-available', json);
+            //console.log(data.toJSON());
+            //console.log(data);
+        } catch (e) {
+            //console.log("\n"+data.toString('hex'));
+            //console.log("\n"+data.toString('UTF-8'));
+            console.log("\n"+e);
+        }
     }
 }
 

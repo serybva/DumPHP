@@ -15,3 +15,7 @@
                 "romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadfhuidhzghzehgzdhgvhkldfhzdfhgdfbhdzfghksdfhgslfgjsljgfgohrzegrzhihdzglsdhgzdsfjildzhgozdhlbzghjfzkljgrohbzehgherghvbgzedlzdgkjskjvhdfklhk:dfsjbjkzdgjfkghdfhgsdfjjhsfgjk:zdbgldshkjhsdfhj;ghzdfjbgvsjkbvgjksdjvgsdjknvjksdfhvl;whjdjvjkzbdfbvklzdsjk,",
                 '<p class="test">HTML !</p>',
                 json_encode(array('test' => 'json', 'sub' => array(1,2,3,4,5,6))));
+    DumPHP::log(1);
+    DumPHP::log(2);
+    DumPHP::log(3);
+    DumPHP::log(1, 2, 3);
