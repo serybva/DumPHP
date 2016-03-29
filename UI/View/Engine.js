@@ -4,6 +4,7 @@ module.exports = Engine;
 
 const humanBytes = require('./Lib/HumanBytes.js');
 const Tabs = require('./Lib/jQuery.tabs.js');
+const Header = require('./Components/Header.js');
 const Emitter = require('events');
 const os = require('os');
 
@@ -11,15 +12,17 @@ function Engine() {
     const   ipc = require('electron').ipcRenderer;
     this.templates = {};//Init templates container
     this.dumps = [];//Init dump container
+    $('header').Mustache();
+    new Header();
     this.on('templates-loaded', function() {//Wait until all templates are loaded
-        this.renderHeader();//Initialize header when templates are loaded
+        //this.renderHeader();//Initialize header when templates are loaded
         ipc.on('dump-available', this.listenForDumps.bind(this));//And wait for dump
     }.bind(this));
     this.on('templates-loading-failed', function() {
         throw "Could not load a template, check your paths";
     }.bind(this));
     this.loadTemplates();//Load templates
-};
+}
 
 Engine.prototype = new Emitter(Engine.prototype);
 
@@ -34,9 +37,8 @@ Engine.prototype.loadTemplates = function() {
             this.templates.sysInfo = template;
             Mustache.parse(this.templates.sysInfo);
         }.bind(this)),
-        $.get('Partials/header.mustache').done(function(template) {
-            this.templates.header = template;
-            Mustache.parse(this.templates.header);
+        $.get('Partials/dump-placeholder.html').done(function(template) {
+            this.templates.dumpPlaceholder = template;
         }.bind(this))
     ];
     var watcher = setInterval(function() {
@@ -49,7 +51,6 @@ Engine.prototype.loadTemplates = function() {
             }
         }
         if (resolved === promisePool.length) {
-            console.log("All resolved");
             this.emit('templates-loaded');
             clearInterval(watcher);
         }
@@ -84,9 +85,12 @@ Engine.prototype.formatDumpData = function(dump) {
         date.getMinutes(), ':', date.getSeconds()
     ].join('');
     return dump;
-}
+};
 
 Engine.prototype.listenForDumps = function(event, dumps) {
+    for (var i = 0;i < dumps.length;i++) {
+        $('.dumps-wrapper').prepend(this.templates.dumpPlaceholder);
+    }
     for (var i = 0;i < dumps.length;i++) {
         dumps[i] = this.formatDumpData(dumps[i]);
     }
@@ -117,23 +121,3 @@ Engine.prototype.render = function() {
         $('.dumps-wrapper div.tabbed-content').tabs();
     }
 };
-
-Engine.prototype.renderHeader = function() {
-    var cpu = os.cpus();
-    var memTotal = os.totalmem();
-    var memFree = os.freemem();
-    if (cpu.length > 0) {
-        $('header').html(
-            Mustache.render(this.templates.header, {
-                cpu_cores: cpu.length+' cores',
-                cpu_freq: (cpu[0].speed/1000)+' Ghz',
-                mem_used: humanBytes(memTotal-memFree),
-                mem_total: humanBytes(memTotal, true),
-                dumps_count: this.dumps.length
-            }, {
-                sysInfo : this.templates.sysInfo
-            })
-        );
-        $('header .hidden').removeClass('hidden');
-    }
-}

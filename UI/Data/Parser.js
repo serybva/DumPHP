@@ -15,7 +15,7 @@ class   Parser {
 
     _parse(data) {
         //console.log(getTime()+'Parser received data');
-        //console.log(data.toString('UTF-8'));
+        console.log(data.toString('UTF-8'));
         try {
             var json = JSON.parse(data.toString('UTF-8'));
             //console.log(getTime()+'Parsed json');

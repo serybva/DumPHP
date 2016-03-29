@@ -2,6 +2,31 @@
 
     require 'DumPHP.php';
 
+    /**
+     *
+     */
+    class TestClass{
+        private     $_private = '1';
+        public     $_public = '1';
+        protected     $_protected = '1';
+        static protected     $_sprotected = '1';
+        static protected     $_instance;
+
+        public  function        __construct() {
+            $this->count = 1;
+        }
+
+        public  static  function    getInstance() {
+            self::$_instance = new self();
+            return self::$_instance;
+        }
+
+        public  function        publicMethod() {}
+        private  function        privateMethod() {}
+        protected  function        protectedMethod() {}
+    }
+
+
     $date = new DateTime();
 
     $object = new stdClass();
@@ -9,6 +34,10 @@
     $string = 'gjjfgsrkjd';
 
     $array = array(1,2,3,'fsdhqkfjhjkqs', 98, 6.00, false);
+    $array2 = array('array' => $array, 0 => $array);
+    DumPHP::log($array2);
+    //DumPHP::log(TestClass::getInstance());
+    //DumPHP::log(new TestClass());
 
     DumPHP::log($string, false, true, 15468, -574626, 0, 1,
                 "è_çàé$^*ùjdfhjfjshsjh'", NULL,

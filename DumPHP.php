@@ -171,7 +171,7 @@ class       DumPHP {
 
     protected   static  function    _getCallerTrace() {
         $backtrace = debug_backtrace();
-        var_dump(__FILE__);
+        //var_dump(__FILE__);
         foreach ($backtrace as $index => $trace) {
             if ($trace['file'] != __FILE__) {
                 return array_slice($backtrace, $index);
@@ -192,7 +192,7 @@ class       DumPHP {
         }
         $dumper = self::getInstance();
         $logs = array();
-        var_dump(debug_backtrace());
+        //var_dump(debug_backtrace());
         $backtrace = self::_getCallerTrace();
         foreach ($args as $arg) {
             $dump = array();
@@ -220,7 +220,10 @@ class       DumPHP {
         $properties['type'] = gettype($var);
         switch ($properties['type']) {
             case 'object' :
-                //$properties['data'] = $this->_formatObject($var);
+                $properties = array_merge($this->_formatObject($var), $properties);
+            break;
+            case 'array' :
+                $properties = array_merge($this->_formatArray($var), $properties);
             break;
             case 'boolean' :
                 $properties = array_merge($this->_formatBool($var), $properties);
@@ -268,39 +271,57 @@ class       DumPHP {
     }
 
     protected   function    _formatObject($object) {
+        $visibilities = array(
+            \ReflectionProperty::IS_PUBLIC => 'public',
+            \ReflectionProperty::IS_PRIVATE => 'private',
+            \ReflectionProperty::IS_PROTECTED => 'protected',
+            \ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_STATIC  => 'public',
+            \ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_STATIC => 'private',
+            \ReflectionProperty::IS_PROTECTED | \ReflectionProperty::IS_STATIC => 'protected'
+        );
         try {
             $reflection = new \ReflectionClass($object);
 
             $data = array('properties' => array());
+            $data['class_name'] = $reflection->name;
+            var_dump($object);
             // loop through the properties and add those
             foreach ($reflection->getProperties() as $property) {
-
-                // if one of these properties was already added above then ignore it
-                if (array_key_exists($property->getName(), $object_vars)) {
-                    continue;
+                $property->setAccessible(true);
+                if ($property->isStatic()) {
+                    $propertyValue = $property->getValue();
+                } else {
+                    $propertyValue = $property->getValue($object);
                 }
-                $type = $this->_getPropertyKey($property);
-
-                if ($this->_php_version >= 5.3) {
-                    $property->setAccessible(true);
+                if (array_key_exists($property->getModifiers(), $visibilities)) {
+                    $visiblity = $visibilities[$property->getModifiers()];
+                } else {
+                    $visiblity = 'public';
                 }
-
-                try {
-                    $value = $property->getValue($object);
-                } catch (\ReflectionException $e) {
-                    $value = 'only PHP 5.3 can access private/protected properties';
-                }
-
-                // same instance as parent object
-                if ($value === $object || in_array($value, $this->_processed, true)) {
-                    $value = 'recursion - parent object [' . get_class($value) . ']';
-                }
-
-                $object_as_array[$type] = $this->_convert($value);
+                $data['properties'][] = array_merge(
+                    array(
+                        'visibility' => $visiblity,
+                        'name' => $property->getName()
+                    ),
+                    $this->_format($propertyValue)
+                );
             }
+            return $data;
         } catch (Exception $e) {
             return array();
         }
+    }
+
+    protected   function    _formatArray($array) {
+        $data['items'] = array();
+        $data['length'] = count($array);
+        foreach ($array as $key => $value) {
+            $data['items'][] = array(
+                'key' => $key,
+                'value' => $this->_format($value)
+            );
+        }
+        return $data;
     }
 
     protected   function        _sendDump($logs) {
