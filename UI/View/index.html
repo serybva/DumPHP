@@ -10,11 +10,9 @@
         </header>
         <section class="dumps-wrapper hidden">
             {{#dumps}}
-                {{> dump }}
+                {{>Partials/dump}}
             {{/dumps}}
         </section>
-        <script src="./Vendor/react.js" type="text/javascript"></script>
-        <script src="./Vendor/react-dom.js" type="text/javascript"></script>
         <script>
             window.$ = window.jQuery = require('./Vendor/jquery-2.2.1.min.js');
             window.Emitter = require('./Vendor/Emitter.js');
